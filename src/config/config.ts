@@ -1,6 +1,7 @@
 import { type ListenerMiddlewareInstance } from '@reduxjs/toolkit';
 import type { InAppLaunchState } from '../state/types';
 import { SLICE_NAME } from '../state/constants';
+import { registerListeners } from '../listeners/listeners';
 
 type InAppLaunchConfig = {
   globalResetActionType?: string;
@@ -40,4 +41,6 @@ export const configureInAppLaunch = (config: InAppLaunchConfigParam) => {
   if (config.sliceSelector) {
     inAppLaunchConfig.sliceSelector = config.sliceSelector;
   }
+
+  registerListeners(config.listenerMiddleware);
 };
