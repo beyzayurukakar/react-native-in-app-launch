@@ -1,6 +1,6 @@
 import type { ListenerMiddlewareInstance } from '@reduxjs/toolkit';
-import { slice } from '../state/slice';
-import { selectors } from '../state/selectors';
+import { slice } from './slice';
+import { selectors } from './selectors';
 
 export const registerListeners = (
   listenerMiddleware: ListenerMiddlewareInstance

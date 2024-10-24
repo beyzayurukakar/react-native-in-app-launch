@@ -1,7 +1,7 @@
 import { type ListenerMiddlewareInstance } from '@reduxjs/toolkit';
-import type { InAppLaunchState } from '../state/types';
-import { SLICE_NAME } from '../state/constants';
-import { registerListeners } from '../listeners/listeners';
+import type { InAppLaunchState } from '../store/types';
+import { SLICE_NAME } from '../store/constants';
+import { registerListeners } from '../store/listeners';
 
 type InAppLaunchConfig = {
   globalResetActionType?: string;
