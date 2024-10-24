@@ -29,4 +29,18 @@ export const selectors = {
         Boolean(inAppLaunchConfig.sliceSelector(state).jobStatusDict[jobName]),
     awaitedJobs: awaitedJobsSelector,
     completedJobs: completedJobsSelector,
+    isJobArrCompleted:
+        (...jobNames: string[]) =>
+        (state: any) => {
+            const jobStatusDict = inAppLaunchConfig.sliceSelector(state).jobStatusDict;
+            let _areJobsCompleted = true;
+            for (const jobName of jobNames) {
+                const isPending = jobStatusDict[jobName];
+                if (isPending) {
+                    _areJobsCompleted = false;
+                    break;
+                }
+            }
+            return _areJobsCompleted;
+        },
 };

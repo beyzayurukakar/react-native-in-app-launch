@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { inAppLaunchConfig } from '../config/config';
-import type { InAppLaunchState } from './types';
+import type { InAppLaunchState, SetJobStatusPayload } from './types';
 import { SLICE_NAME } from './constants';
 
 const INITIAL_STATE: InAppLaunchState = {
@@ -27,7 +27,7 @@ export const slice = createSlice({
             state.isWaitingForJobs = false;
             state.areAllJobsDone = true;
         },
-        setJobStatus: (state, action: PayloadAction<{ jobName: string; status: boolean }>) => {
+        setJobStatus: (state, action: PayloadAction<SetJobStatusPayload>) => {
             const jobName = action.payload.jobName;
             const status = action.payload.status;
             state.jobStatusDict[jobName] = status;
