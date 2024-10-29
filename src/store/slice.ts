@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { inAppLaunchConfig } from '../config/config';
+import { inAppLaunchConfig } from '../config/configuration';
 import type { InAppLaunchState, SetJobStatusPayload } from './types';
 import { SLICE_NAME } from './constants';
 

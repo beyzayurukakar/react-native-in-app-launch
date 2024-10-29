@@ -6,3 +6,4 @@ export { default as listenerMwTools } from './api/listenerMwTools';
 export { useInAppLaunch } from './api/useInAppLaunch';
 export { useJobAtLaunch } from './api/useJobAtLaunch';
 export { useIsLaunchComplete } from './api/useIsLaunchComplete';
+export { configureInAppLaunch, type InAppLaunchConfigParam } from './config/configure';

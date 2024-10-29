@@ -1,5 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { inAppLaunchConfig } from '../config/config';
+import { inAppLaunchConfig } from '../config/configuration';
 
 const pendingJobsSelector = createSelector(
     (state) => inAppLaunchConfig.sliceSelector(state).jobStatusDict,
