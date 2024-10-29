@@ -5,7 +5,7 @@ import { SLICE_NAME } from './constants';
 
 const INITIAL_STATE: InAppLaunchState = {
     isInitialized: false,
-    isWaitingForJobs: false,
+    isAnyJobPending: false,
     areAllJobsDone: false,
     isLaunchComplete: false,
     jobStatusDict: {},
@@ -18,13 +18,13 @@ export const slice = createSlice({
     reducers: {
         initialize: (state) => {
             state.isInitialized = true;
-            state.isWaitingForJobs = true;
+            state.isAnyJobPending = true;
         },
         setPendingJobsCount: (state, action: PayloadAction<number>) => {
             state.pendingJobsCount = action.payload;
         },
         setAllJobsDone: (state) => {
-            state.isWaitingForJobs = false;
+            state.isAnyJobPending = false;
             state.areAllJobsDone = true;
         },
         setJobStatus: (state, action: PayloadAction<SetJobStatusPayload>) => {

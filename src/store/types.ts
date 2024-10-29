@@ -1,6 +1,6 @@
 export type InAppLaunchState = {
     isInitialized: boolean;
-    isWaitingForJobs: boolean;
+    isAnyJobPending: boolean;
     areAllJobsDone: boolean;
     isLaunchComplete: boolean;
     jobStatusDict: Record<string, boolean>;
