@@ -12667,6 +12667,7 @@ __metadata:
     "@reduxjs/toolkit": ^2.3.0
     react: "*"
     react-native: "*"
+    react-redux: ^9.1.2
   languageName: unknown
   linkType: soft
 
