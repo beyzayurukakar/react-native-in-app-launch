@@ -16,7 +16,7 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
             }
 
             const jobName = action.payload;
-            const currentStatusOfJob = selectors.jobStatus(jobName)(state);
+            const currentStatusOfJob = selectors.jobStatus(state, jobName);
 
             // Check if job was not already being waited
             if (currentStatusOfJob === undefined || currentStatusOfJob === false) {
@@ -50,7 +50,7 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
             }
 
             const jobName = action.payload;
-            const currentStatusOfJob = selectors.jobStatus(jobName)(state);
+            const currentStatusOfJob = selectors.jobStatus(state, jobName);
 
             // Check if job was being waited
             if (currentStatusOfJob === true) {

@@ -9,7 +9,7 @@ const multiple =
         if (action.type === slice.actions.setJobStatus.type) {
             const _action = action as PayloadAction<SetJobStatusPayload>;
             if (jobNames.includes(_action.payload.jobName) && _action.payload.status === false) {
-                const areDependedJobsDone = selectors.isJobArrCompleted(...jobNames)(currentState);
+                const areDependedJobsDone = selectors.isJobArrCompleted(currentState, jobNames);
                 return areDependedJobsDone;
             }
         }

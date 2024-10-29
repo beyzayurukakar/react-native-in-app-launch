@@ -19,28 +19,33 @@ const completedJobsSelector = createSelector(
     }
 );
 
+const isJobArrCompletedSelector = createSelector(
+    [
+        (state) => inAppLaunchConfig.sliceSelector(state).jobStatusDict,
+        (_state, jobNames: string[]) => jobNames,
+    ],
+    (jobStatusDict: Record<string, boolean>, jobNames: string[]) => {
+        let _areJobsCompleted = true;
+        for (const jobName of jobNames) {
+            const isPending = jobStatusDict[jobName];
+            if (isPending) {
+                _areJobsCompleted = false;
+                break;
+            }
+        }
+        return _areJobsCompleted;
+    }
+);
+
 export const selectors = {
     isInitialized: (state: any) => inAppLaunchConfig.sliceSelector(state).isInitialized,
     isWaitingForJobs: (state: any) => inAppLaunchConfig.sliceSelector(state).isWaitingForJobs,
     areAllJobsDone: (state: any) => inAppLaunchConfig.sliceSelector(state).areAllJobsDone,
     isLaunchComplete: (state: any) => inAppLaunchConfig.sliceSelector(state).isLaunchComplete,
     awaitedJobsCount: (state: any) => inAppLaunchConfig.sliceSelector(state).awaitedJobsCount,
-    jobStatus: (jobName: string) => (state: any) =>
+    jobStatus: (state: any, jobName: string) =>
         Boolean(inAppLaunchConfig.sliceSelector(state).jobStatusDict[jobName]),
     awaitedJobs: awaitedJobsSelector,
     completedJobs: completedJobsSelector,
-    isJobArrCompleted:
-        (...jobNames: string[]) =>
-        (state: any) => {
-            const jobStatusDict = inAppLaunchConfig.sliceSelector(state).jobStatusDict;
-            let _areJobsCompleted = true;
-            for (const jobName of jobNames) {
-                const isPending = jobStatusDict[jobName];
-                if (isPending) {
-                    _areJobsCompleted = false;
-                    break;
-                }
-            }
-            return _areJobsCompleted;
-        },
+    isJobArrCompleted: isJobArrCompletedSelector,
 };
