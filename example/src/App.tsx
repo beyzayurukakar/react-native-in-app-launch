@@ -1,12 +1,17 @@
-import Home from './components/home/Home';
-import Launch from './components/launch/Launch';
+import { Provider } from 'react-redux';
+import RootContainer from './RootContainer';
+import { store } from './store/configuration';
+import { configureInAppLaunch } from 'react-native-in-app-launch';
+import { listenerMiddleware } from './store/listenerMw';
+
+configureInAppLaunch({
+    listenerMiddleware: listenerMiddleware,
+});
 
 export default function App() {
-    const isLaunchComplete = false;
-
-    if (isLaunchComplete) {
-        return <Home />;
-    }
-
-    return <Launch />;
+    return (
+        <Provider store={store}>
+            <RootContainer />
+        </Provider>
+    );
 }
