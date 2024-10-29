@@ -9,7 +9,7 @@ const INITIAL_STATE: InAppLaunchState = {
     areAllJobsDone: false,
     isLaunchComplete: false,
     jobStatusDict: {},
-    awaitedJobsCount: 0,
+    pendingJobsCount: 0,
 };
 
 export const slice = createSlice({
@@ -20,8 +20,8 @@ export const slice = createSlice({
             state.isInitialized = true;
             state.isWaitingForJobs = true;
         },
-        setAwaitedJobsCount: (state, action: PayloadAction<number>) => {
-            state.awaitedJobsCount = action.payload;
+        setPendingJobsCount: (state, action: PayloadAction<number>) => {
+            state.pendingJobsCount = action.payload;
         },
         setAllJobsDone: (state) => {
             state.isWaitingForJobs = false;
@@ -37,9 +37,9 @@ export const slice = createSlice({
         },
         reset: () => ({ ...INITIAL_STATE }),
         // handled by listener
-        addToAwaitedJobs: (_state, _action: PayloadAction<string>) => {},
+        addToPendingJobs: (_state, _action: PayloadAction<string>) => {},
         // handled by listener
-        removeFromAwaitedJobs: (_state, _action: PayloadAction<string>) => {},
+        removeFromPendingJobs: (_state, _action: PayloadAction<string>) => {},
     },
     extraReducers: (builder) => {
         if (inAppLaunchConfig.globalResetActionType) {

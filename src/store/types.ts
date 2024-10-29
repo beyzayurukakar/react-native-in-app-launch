@@ -4,7 +4,7 @@ export type InAppLaunchState = {
     areAllJobsDone: boolean;
     isLaunchComplete: boolean;
     jobStatusDict: Record<string, boolean>;
-    awaitedJobsCount: number;
+    pendingJobsCount: number;
 };
 
 export type SetJobStatusPayload = { jobName: string; status: boolean };

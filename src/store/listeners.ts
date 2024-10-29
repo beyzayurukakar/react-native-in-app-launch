@@ -5,7 +5,7 @@ import { selectors } from './selectors';
 export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance) => {
     // A job started
     listenerMiddleware.startListening({
-        actionCreator: slice.actions.addToAwaitedJobs,
+        actionCreator: slice.actions.addToPendingJobs,
         effect: (action, api) => {
             const state = api.getState();
 
@@ -18,9 +18,9 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
             const jobName = action.payload;
             const currentStatusOfJob = selectors.jobStatus(state, jobName);
 
-            // Check if job was not already being waited
+            // Check if job was not already pending
             if (currentStatusOfJob === undefined || currentStatusOfJob === false) {
-                // Set job's 'waited' status to true
+                // Set job's 'pending' status to true
                 api.dispatch(
                     slice.actions.setJobStatus({
                         jobName,
@@ -28,9 +28,9 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
                     })
                 );
 
-                // Increase awaited jobs count by 1
-                const awaitedJobsCount: number = selectors.awaitedJobsCount(state);
-                api.dispatch(slice.actions.setAwaitedJobsCount(awaitedJobsCount + 1));
+                // Increase pending jobs count by 1
+                const pendingJobsCount: number = selectors.pendingJobsCount(state);
+                api.dispatch(slice.actions.setPendingJobsCount(pendingJobsCount + 1));
             } else {
                 console.warn('TODO: this job already added');
             }
@@ -39,7 +39,7 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
 
     // A job ended
     listenerMiddleware.startListening({
-        actionCreator: slice.actions.removeFromAwaitedJobs,
+        actionCreator: slice.actions.removeFromPendingJobs,
         effect: (action, api) => {
             const state = api.getState();
 
@@ -52,9 +52,9 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
             const jobName = action.payload;
             const currentStatusOfJob = selectors.jobStatus(state, jobName);
 
-            // Check if job was being waited
+            // Check if job was pending
             if (currentStatusOfJob === true) {
-                // Set job's 'waited' status to false
+                // Set job's 'pending' status to false
                 api.dispatch(
                     slice.actions.setJobStatus({
                         jobName,
@@ -62,9 +62,9 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
                     })
                 );
 
-                // Decrease awaited jobs count by 1
-                const awaitedJobsCount: number = selectors.awaitedJobsCount(state);
-                api.dispatch(slice.actions.setAwaitedJobsCount(awaitedJobsCount - 1));
+                // Decrease pending jobs count by 1
+                const pendingJobsCount: number = selectors.pendingJobsCount(state);
+                api.dispatch(slice.actions.setPendingJobsCount(pendingJobsCount - 1));
             } else {
                 console.warn('TODO: this job already removed');
             }
@@ -74,11 +74,11 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
     // Job count down to zero
     listenerMiddleware.startListening({
         predicate: (action) => {
-            return action.type === slice.actions.setAwaitedJobsCount.type && action.payload === 0;
+            return action.type === slice.actions.setPendingJobsCount.type && action.payload === 0;
         },
         effect: async (_action, api) => {
             /*
-            Whenever awaited jobs count falls to zero,
+            Whenever pending jobs count falls to zero,
             wait a little in case there will be an addition of a job that depends on the last completed job.
             If no jobs start, complete the launch.
             */
@@ -86,7 +86,7 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
             const WAIT_DURATION = 500; // ms
 
             const resolved = await api.take((action) => {
-                return action.type === slice.actions.addToAwaitedJobs.type;
+                return action.type === slice.actions.addToPendingJobs.type;
             }, WAIT_DURATION);
 
             if (resolved === null) {

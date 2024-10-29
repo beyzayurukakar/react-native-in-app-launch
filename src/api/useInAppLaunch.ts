@@ -31,22 +31,22 @@ export const useInAppLaunchEffect = (effect: React.EffectCallback, ...jobNames: 
         };
     }, [areJobsCompleted]);
 
-    const addToAwaitedJobs = useCallback(
+    const addToPendingJobs = useCallback(
         (jobName: string) => {
-            dispatch(slice.actions.addToAwaitedJobs(jobName));
+            dispatch(slice.actions.addToPendingJobs(jobName));
         },
         [dispatch]
     );
 
-    const removeFromAwaitedJobs = useCallback(
+    const removeFromPendingJobs = useCallback(
         (jobName: string) => {
-            dispatch(slice.actions.removeFromAwaitedJobs(jobName));
+            dispatch(slice.actions.removeFromPendingJobs(jobName));
         },
         [dispatch]
     );
 
     return {
-        addToAwaitedJobs,
-        removeFromAwaitedJobs,
+        addToPendingJobs,
+        removeFromPendingJobs,
     };
 };

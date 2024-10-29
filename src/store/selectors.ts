@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { inAppLaunchConfig } from '../config/config';
 
-const awaitedJobsSelector = createSelector(
+const pendingJobsSelector = createSelector(
     (state) => inAppLaunchConfig.sliceSelector(state).jobStatusDict,
     (jobStatusDict: Record<string, boolean>) => {
         return Object.keys(jobStatusDict).filter((jobName) => {
@@ -42,10 +42,10 @@ export const selectors = {
     isWaitingForJobs: (state: any) => inAppLaunchConfig.sliceSelector(state).isWaitingForJobs,
     areAllJobsDone: (state: any) => inAppLaunchConfig.sliceSelector(state).areAllJobsDone,
     isLaunchComplete: (state: any) => inAppLaunchConfig.sliceSelector(state).isLaunchComplete,
-    awaitedJobsCount: (state: any) => inAppLaunchConfig.sliceSelector(state).awaitedJobsCount,
+    pendingJobsCount: (state: any) => inAppLaunchConfig.sliceSelector(state).pendingJobsCount,
     jobStatus: (state: any, jobName: string) =>
         Boolean(inAppLaunchConfig.sliceSelector(state).jobStatusDict[jobName]),
-    awaitedJobs: awaitedJobsSelector,
+    pendingJobs: pendingJobsSelector,
     completedJobs: completedJobsSelector,
     isJobArrCompleted: isJobArrCompletedSelector,
 };
