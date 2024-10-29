@@ -3,7 +3,7 @@ import { slice } from './slice';
 import { selectors } from './selectors';
 
 export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance) => {
-    // A job started
+    // addToPendingJobs: A job started
     listenerMiddleware.startListening({
         actionCreator: slice.actions.addToPendingJobs,
         effect: (action, api) => {
@@ -37,7 +37,7 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
         },
     });
 
-    // A job ended
+    // removeFromPendingJobs: A job ended
     listenerMiddleware.startListening({
         actionCreator: slice.actions.removeFromPendingJobs,
         effect: (action, api) => {
