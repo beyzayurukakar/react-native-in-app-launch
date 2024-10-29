@@ -3,7 +3,7 @@ import { slice } from '../store/slice';
 import { selectors } from '../store/selectors';
 import type { SetJobStatusPayload } from '../store/types';
 
-export const multiple =
+export const jobListenerPredicate =
     (...jobNames: string[]): AnyListenerPredicate<any> =>
     (action, currentState) => {
         if (action.type === slice.actions.setJobStatus.type) {
