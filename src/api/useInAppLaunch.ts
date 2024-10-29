@@ -1,12 +1,15 @@
-import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectors } from '../store/selectors';
+import { slice } from '../store/slice';
 
 export const useInAppLaunchEffect = (effect: React.EffectCallback, ...jobNames: string[]) => {
     const areJobsCompleted = useSelector((state: any) =>
         selectors.isJobArrCompleted(state, jobNames)
     );
     const effectRef = useRef(effect);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         /*
@@ -27,4 +30,23 @@ export const useInAppLaunchEffect = (effect: React.EffectCallback, ...jobNames: 
             unsubscribe?.();
         };
     }, [areJobsCompleted]);
+
+    const addToAwaitedJobs = useCallback(
+        (jobName: string) => {
+            dispatch(slice.actions.addToAwaitedJobs(jobName));
+        },
+        [dispatch]
+    );
+
+    const removeFromAwaitedJobs = useCallback(
+        (jobName: string) => {
+            dispatch(slice.actions.removeFromAwaitedJobs(jobName));
+        },
+        [dispatch]
+    );
+
+    return {
+        addToAwaitedJobs,
+        removeFromAwaitedJobs,
+    };
 };
