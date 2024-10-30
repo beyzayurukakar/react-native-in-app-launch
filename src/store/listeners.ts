@@ -7,7 +7,6 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
     listenerMiddleware.startListening({
         actionCreator: slice.actions.addToPendingJobs,
         effect: (action, api) => {
-            api.unsubscribe();
             const state = api.getState();
 
             // If launch is already complete, no-op
@@ -28,10 +27,7 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
                         status: true,
                     })
                 );
-            } else {
-                console.warn('TODO: this job already added');
             }
-            api.subscribe();
         },
     });
 
@@ -39,7 +35,6 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
     listenerMiddleware.startListening({
         actionCreator: slice.actions.removeFromPendingJobs,
         effect: (action, api) => {
-            api.unsubscribe();
             const state = api.getState();
 
             // If launch is already complete, no-op
@@ -63,7 +58,6 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
             } else {
                 console.warn('TODO: this job already removed');
             }
-            api.subscribe();
         },
     });
 
