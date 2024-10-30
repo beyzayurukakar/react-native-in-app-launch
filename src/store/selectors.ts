@@ -28,7 +28,7 @@ const isJobArrCompletedSelector = createSelector(
         let _areJobsCompleted = true;
         for (const jobName of jobNames) {
             const isPending = jobStatusDict[jobName];
-            if (isPending) {
+            if (isPending === true || isPending === undefined) {
                 _areJobsCompleted = false;
                 break;
             }
@@ -44,7 +44,7 @@ export const selectors = {
     isLaunchComplete: (state: any) => inAppLaunchConfig.sliceSelector(state).isLaunchComplete,
     pendingJobsCount: (state: any) => inAppLaunchConfig.sliceSelector(state).pendingJobsCount,
     jobStatus: (state: any, jobName: string) =>
-        Boolean(inAppLaunchConfig.sliceSelector(state).jobStatusDict[jobName]),
+        inAppLaunchConfig.sliceSelector(state).jobStatusDict[jobName],
     pendingJobs: pendingJobsSelector,
     completedJobs: completedJobsSelector,
     isJobArrCompleted: isJobArrCompletedSelector,

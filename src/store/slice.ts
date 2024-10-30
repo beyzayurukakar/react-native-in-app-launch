@@ -36,10 +36,44 @@ export const slice = createSlice({
             state.isLaunchComplete = true;
         },
         reset: () => ({ ...INITIAL_STATE }),
-        // handled by listener
-        addToPendingJobs: (_state, _action: PayloadAction<string>) => {},
-        // handled by listener
-        removeFromPendingJobs: (_state, _action: PayloadAction<string>) => {},
+        addToPendingJobs: (state, action: PayloadAction<string>) => {
+            // If launch is already complete, no-op
+            const isLaunchComplete = state.isLaunchComplete;
+            if (isLaunchComplete) {
+                return;
+            }
+
+            const jobName = action.payload;
+            const currentStatusOfJob = state.jobStatusDict[jobName];
+
+            // Check if job was not already pending
+            if (currentStatusOfJob === undefined || currentStatusOfJob === false) {
+                // Set job's 'pending' status to true
+                state.jobStatusDict[jobName] = true;
+                state.pendingJobsCount++;
+            } else {
+                console.warn('TODO: this job already added', jobName);
+            }
+        },
+        removeFromPendingJobs: (state, action: PayloadAction<string>) => {
+            // If launch is already complete, no-op
+            const isLaunchComplete = state.isLaunchComplete;
+            if (isLaunchComplete) {
+                return;
+            }
+
+            const jobName = action.payload;
+            const currentStatusOfJob = state.jobStatusDict[jobName];
+
+            // Check if job was pending
+            if (currentStatusOfJob === true) {
+                // Set job's 'pending' status to false
+                state.jobStatusDict[jobName] = false;
+                state.pendingJobsCount--;
+            } else {
+                console.warn('TODO: this job already removed', jobName);
+            }
+        },
     },
     extraReducers: (builder) => {
         if (inAppLaunchConfig.globalResetActionType) {
