@@ -20,11 +20,11 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
 
             const WAIT_DURATION = 2000; // ms
 
-            const resolved = await api.take((action) => {
+            const isJobAdded = await api.condition((action) => {
                 return action.type === slice.actions.addToPendingJobs.type;
             }, WAIT_DURATION);
 
-            if (resolved === null) {
+            if (isJobAdded === false) {
                 // timed out => complete the launch
                 api.dispatch(slice.actions.setAllJobsDone());
                 return;
