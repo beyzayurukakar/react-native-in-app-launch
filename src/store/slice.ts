@@ -29,15 +29,12 @@ export const slice = createSlice({
         },
         setJobStatus: (state, action: PayloadAction<SetJobStatusPayload>) => {
             const jobName = action.payload.jobName;
-            const newStatus = action.payload.status;
-            const previousStatus = state.jobStatusDict[jobName];
-            if (newStatus !== previousStatus) {
-                state.jobStatusDict[jobName] = newStatus;
-                if (newStatus === true) {
-                    state.pendingJobsCount++;
-                } else {
-                    state.pendingJobsCount--;
-                }
+            const status = action.payload.status;
+            state.jobStatusDict[jobName] = status;
+            if (status === true) {
+                state.pendingJobsCount++;
+            } else {
+                state.pendingJobsCount--;
             }
         },
         completeInAppLaunch: (state) => {
