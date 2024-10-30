@@ -55,8 +55,6 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
                         status: false,
                     })
                 );
-            } else {
-                console.warn('TODO: this job already removed');
             }
         },
     });
