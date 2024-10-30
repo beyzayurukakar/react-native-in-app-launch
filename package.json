@@ -133,7 +133,9 @@
       "@react-native",
       "prettier"
     ],
-    "ignorePatterns": ["*.js"],
+    "ignorePatterns": [
+      "*.js"
+    ],
     "rules": {
       "react/react-in-jsx-scope": "off",
       "prettier/prettier": [

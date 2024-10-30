@@ -22,6 +22,10 @@ E
 - runs using **listener middleware**
 
 ## Job E
+- depends on **D**
+- runs using **sagas**
+
+## Job F
 - depends on **B** and **D**
 - runs using **sagas**
 

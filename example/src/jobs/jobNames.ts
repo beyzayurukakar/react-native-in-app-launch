@@ -4,4 +4,5 @@ export const JOB_NAMES = {
     C: 'C',
     D: 'D',
     E: 'E',
+    F: 'F',
 };
