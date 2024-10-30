@@ -3,11 +3,70 @@ import { slice } from './slice';
 import { selectors } from './selectors';
 
 export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance) => {
+    // addToPendingJobs: A job started
+    listenerMiddleware.startListening({
+        actionCreator: slice.actions.addToPendingJobs,
+        effect: (action, api) => {
+            const state = api.getState();
+
+            // If launch is already complete, no-op
+            const isLaunchComplete = selectors.isLaunchComplete(state);
+            if (isLaunchComplete) {
+                return;
+            }
+
+            const jobName = action.payload;
+            const currentStatusOfJob = selectors.jobStatus(state, jobName);
+
+            // Check if job was not already pending
+            if (currentStatusOfJob === undefined || currentStatusOfJob === false) {
+                // Set job's 'pending' status to true
+                api.dispatch(
+                    slice.actions.setJobStatus({
+                        jobName,
+                        status: true,
+                    })
+                );
+            } else {
+                console.warn('TODO: this job already added');
+            }
+        },
+    });
+
+    // removeFromPendingJobs: A job ended
+    listenerMiddleware.startListening({
+        actionCreator: slice.actions.removeFromPendingJobs,
+        effect: (action, api) => {
+            const state = api.getState();
+
+            // If launch is already complete, no-op
+            const isLaunchComplete = selectors.isLaunchComplete(state);
+            if (isLaunchComplete) {
+                return;
+            }
+
+            const jobName = action.payload;
+            const currentStatusOfJob = selectors.jobStatus(state, jobName);
+
+            // Check if job was pending
+            if (currentStatusOfJob === true) {
+                // Set job's 'pending' status to false
+                api.dispatch(
+                    slice.actions.setJobStatus({
+                        jobName,
+                        status: false,
+                    })
+                );
+            } else {
+                console.warn('TODO: this job already removed');
+            }
+        },
+    });
     // Job count down to zero
     listenerMiddleware.startListening({
         predicate: (action, currentState) => {
             return (
-                action.type === slice.actions.removeFromPendingJobs.type &&
+                action.type === slice.actions.setJobStatus.type &&
                 selectors.pendingJobsCount(currentState) === 0
             );
         },
