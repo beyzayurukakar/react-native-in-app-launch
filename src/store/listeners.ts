@@ -1,4 +1,4 @@
-import type { ListenerMiddlewareInstance } from '@reduxjs/toolkit';
+import { type ListenerMiddlewareInstance } from '@reduxjs/toolkit';
 import { slice } from './slice';
 import { selectors } from './selectors';
 
@@ -7,6 +7,7 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
     listenerMiddleware.startListening({
         actionCreator: slice.actions.addToPendingJobs,
         effect: (action, api) => {
+            api.unsubscribe();
             const state = api.getState();
 
             // If launch is already complete, no-op
@@ -30,6 +31,7 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
             } else {
                 console.warn('TODO: this job already added');
             }
+            api.subscribe();
         },
     });
 
@@ -37,6 +39,7 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
     listenerMiddleware.startListening({
         actionCreator: slice.actions.removeFromPendingJobs,
         effect: (action, api) => {
+            api.unsubscribe();
             const state = api.getState();
 
             // If launch is already complete, no-op
@@ -60,34 +63,36 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
             } else {
                 console.warn('TODO: this job already removed');
             }
+            api.subscribe();
         },
     });
-    // Job count down to zero
+
+    /*
+    Decides when to complete the launch.
+    Listens for job status changes.
+    Works like debounce / saga takeLatest.
+    */
     listenerMiddleware.startListening({
-        predicate: (action, currentState) => {
-            return (
-                action.type === slice.actions.setJobStatus.type &&
-                selectors.pendingJobsCount(currentState) === 0
-            );
+        predicate: (action) => {
+            return action.type === slice.actions.setJobStatus.type;
         },
         effect: async (_action, api) => {
-            /*
-            Whenever pending jobs count falls to zero,
-            wait a little in case there will be an addition of a job that depends on the last completed job.
-            If no jobs start, complete the launch.
-            */
+            // Cancel other instances for debounce effect
+            api.cancelActiveListeners();
 
-            const WAIT_DURATION = 2000; // ms
+            // Wait in case another instance of this listener is called
+            // i.e a job status update happened
+            await api.delay(200);
 
-            const isJobAdded = await api.condition((action) => {
-                return action.type === slice.actions.addToPendingJobs.type;
-            }, WAIT_DURATION);
-
-            if (isJobAdded === false) {
-                // timed out => complete the launch
-                api.dispatch(slice.actions.setAllJobsDone());
+            // If we are here, no job status update happened in the last 500 ms:
+            const state = api.getState();
+            if (selectors.pendingJobsCount(state) > 0) {
+                // There are still pending jobs: no-op
                 return;
             }
+
+            // Pending jobs count fell to zero: complete the launch
+            api.dispatch(slice.actions.setAllJobsDone());
         },
     });
 };

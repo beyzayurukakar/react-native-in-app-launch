@@ -1,3 +1,3 @@
 export const getRandomDuration = () => {
-    return Math.random() * (3000 - 2000) + 2000;
+    return Math.random() * (8000 - 4000) + 4000;
 };
