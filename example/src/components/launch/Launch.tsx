@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { selectors, useInAppLaunch } from 'react-native-in-app-launch';
+import { selectors, useManageLaunch } from 'react-native-in-app-launch';
 import { useSelector } from 'react-redux';
 import { JOB_NAMES } from '../../jobs/jobNames';
 
 const Launch = () => {
-    useInAppLaunch({
+    useManageLaunch({
         isAnimationComplete: true,
     });
 

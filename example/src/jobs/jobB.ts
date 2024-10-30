@@ -1,15 +1,15 @@
-import { listenerMwTools } from 'react-native-in-app-launch';
+import { getListenerPredicate, inAppLaunchSlice } from 'react-native-in-app-launch';
 import { listenerMiddleware } from '../store/listenerMw';
 import { getRandomDuration } from './randomDuration';
 import { JOB_NAMES } from './jobNames';
 
 export const listenersB = () => {
     listenerMiddleware.startListening({
-        predicate: listenerMwTools.inAppLaunchPredicate(JOB_NAMES.A),
+        predicate: getListenerPredicate(JOB_NAMES.A),
         effect: async (_action, api) => {
-            api.dispatch(listenerMwTools.addToPendingJobsAction(JOB_NAMES.B));
+            api.dispatch(inAppLaunchSlice.actions.jobStarted(JOB_NAMES.B));
             await api.delay(getRandomDuration());
-            api.dispatch(listenerMwTools.removeFromPendingJobsAction(JOB_NAMES.B));
+            api.dispatch(inAppLaunchSlice.actions.jobEnded(JOB_NAMES.B));
         },
     });
 };

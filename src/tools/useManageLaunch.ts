@@ -3,7 +3,7 @@ import { selectors } from '../store/selectors';
 import { useEffect } from 'react';
 import { slice } from '../store/slice';
 
-export const useInAppLaunch = ({ isAnimationComplete }: { isAnimationComplete: boolean }) => {
+export const useManageLaunch = ({ isAnimationComplete }: { isAnimationComplete: boolean }) => {
     const dispatch = useDispatch();
     const areAllJobsDone = useSelector(selectors.areAllJobsDone);
 

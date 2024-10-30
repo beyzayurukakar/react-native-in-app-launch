@@ -42,9 +42,9 @@ export const slice = createSlice({
         },
         reset: () => ({ ...INITIAL_STATE }),
         // Handled by listener
-        addToPendingJobs: (_state, _action: PayloadAction<string>) => {},
+        jobStarted: (_state, _action: PayloadAction<string>) => {},
         // Handled by lsitener
-        removeFromPendingJobs: (_state, _action: PayloadAction<string>) => {},
+        jobEnded: (_state, _action: PayloadAction<string>) => {},
     },
     extraReducers: (builder) => {
         if (inAppLaunchConfig.globalResetActionType) {
@@ -54,3 +54,12 @@ export const slice = createSlice({
         }
     },
 });
+
+export const sliceExternal = {
+    name: slice.name,
+    reducer: slice.reducer,
+    actions: {
+        jobStarted: slice.actions.jobStarted,
+        jobEnded: slice.actions.jobEnded,
+    },
+};

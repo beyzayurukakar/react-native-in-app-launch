@@ -3,7 +3,7 @@ import { slice } from '../store/slice';
 import { selectors } from '../store/selectors';
 import type { SetJobStatusPayload } from '../store/types';
 
-export const inAppLaunchPredicate =
+export const getListenerPredicate =
     (...dependedJobNames: string[]): AnyListenerPredicate<any> =>
     (action, currentState) => {
         if (dependedJobNames.length === 0) {
@@ -26,11 +26,3 @@ export const inAppLaunchPredicate =
 
         return false;
     };
-
-const listenerMwTools = {
-    inAppLaunchPredicate,
-    addToPendingJobsAction: slice.actions.addToPendingJobs,
-    removeFromPendingJobsAction: slice.actions.removeFromPendingJobs,
-};
-
-export default listenerMwTools;

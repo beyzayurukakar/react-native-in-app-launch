@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { inAppLaunchReducer, inAppLaunchSliceName } from 'react-native-in-app-launch';
+import { inAppLaunchSlice } from 'react-native-in-app-launch';
 
 import createSagaMiddleware from 'redux-saga';
 const sagaMiddleware = createSagaMiddleware();
@@ -25,7 +25,7 @@ function* rootSaga() {
 }
 
 const reducers = {
-    [inAppLaunchSliceName]: inAppLaunchReducer,
+    [inAppLaunchSlice.name]: inAppLaunchSlice.reducer,
 };
 
 export const store = configureStore({
