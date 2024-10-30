@@ -16,6 +16,7 @@ const Launch = () => {
 
     return (
         <View style={styles.container}>
+            <Text style={styles.titleText}>Launch Screen</Text>
             <Text style={getJobStatusStyle(jobStatusA)}>
                 {'Job A: ' + getJobStatusText(jobStatusA)}
             </Text>
@@ -60,6 +61,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    titleText: {
+        fontWeight: '900',
+        marginBottom: 20,
     },
     jobNotStarted: {
         color: 'grey',
