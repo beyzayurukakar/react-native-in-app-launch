@@ -5,7 +5,7 @@ import { JOB_NAMES } from './jobNames';
 
 export const listenersC = () => {
     listenerMiddleware.startListening({
-        predicate: listenerMwTools.jobDependencyPredicate(),
+        predicate: listenerMwTools.inAppLaunchPredicate(),
         effect: async (_action, api) => {
             api.dispatch(listenerMwTools.addToPendingJobsAction(JOB_NAMES.C));
             await api.delay(getRandomDuration());
