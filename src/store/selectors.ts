@@ -39,7 +39,7 @@ const isJobArrCompletedSelector = createSelector(
 
 export const selectors = {
     isInitialized: (state: any) => inAppLaunchConfig.sliceSelector(state).isInitialized,
-    isAnyJobPending: (state: any) => inAppLaunchConfig.sliceSelector(state).isAnyJobPending,
+    isWaitingForJobs: (state: any) => inAppLaunchConfig.sliceSelector(state).isWaitingForJobs,
     areAllJobsDone: (state: any) => inAppLaunchConfig.sliceSelector(state).areAllJobsDone,
     isLaunchComplete: (state: any) => inAppLaunchConfig.sliceSelector(state).isLaunchComplete,
     pendingJobsCount: (state: any) => inAppLaunchConfig.sliceSelector(state).pendingJobsCount,

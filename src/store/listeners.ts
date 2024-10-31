@@ -60,15 +60,15 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
     });
 
     /*
-    Decides when to complete the launch.
+    Marks 'allJobsDone' true when there are no jobs left and will not be.
     Works like debounce / saga takeLatest.
     */
     listenerMiddleware.startListening({
         predicate: (action) => {
             /*
             1. Listens for job status changes for:
-                - Job status set to 'pending': decides not to complete the launch.
-                - Job status set to 'done': waits for new jobs before completing the launch.
+                - Job status set to 'pending': decides not to mark all done.
+                - Job status set to 'done': waits for new jobs before marking all done.
             2. Listens for initialization in case no job ever starts and launch needs to be completed.
             */
 
