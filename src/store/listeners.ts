@@ -61,12 +61,21 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
 
     /*
     Decides when to complete the launch.
-    Listens for job status changes.
     Works like debounce / saga takeLatest.
     */
     listenerMiddleware.startListening({
         predicate: (action) => {
-            return action.type === slice.actions.setJobStatus.type;
+            /*
+            1. Listens for job status changes for:
+                - Job status set to 'pending': decides not to complete the launch.
+                - Job status set to 'done': waits for new jobs before completing the launch.
+            2. Listens for initialization in case no job ever starts and launch needs to be completed.
+            */
+
+            return (
+                action.type === slice.actions.setJobStatus.type ||
+                action.type === slice.actions.initialize.type
+            );
         },
         effect: async (_action, api) => {
             // Cancel other instances for debounce effect
