@@ -5,10 +5,12 @@ import type { SetJobStatusPayload } from '../store/types';
 
 export const getListenerPredicate =
     (...dependedJobNames: string[]): AnyListenerPredicate<any> =>
-    (action, currentState) => {
+    (action, currentState, originalState) => {
         if (dependedJobNames.length === 0) {
-            const returning = action.type === slice.actions.initialize.type;
-            return returning;
+            return (
+                action.type === slice.actions.initialize.type &&
+                selectors.isInitialized(originalState) === false
+            );
         }
         if (action.type === slice.actions.setJobStatus.type) {
             const _action = action as PayloadAction<SetJobStatusPayload>;
