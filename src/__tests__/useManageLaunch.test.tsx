@@ -1,26 +1,10 @@
 import { waitFor } from '@testing-library/react-native';
-import { useManageLaunch, useLaunchStates } from '../tools';
-import { renderWithProviders } from '../utils/test-utils';
-import { Text, View } from 'react-native';
+import { Launch, renderWithSetup } from '../utils/test-utils';
 import { slice } from '../store/slice';
-
-const Launch = (props: { isAnimationComplete: boolean }) => {
-    useManageLaunch({ isAnimationComplete: props.isAnimationComplete });
-
-    const { isInitialized, isWaitingForJobs, isComplete } = useLaunchStates();
-
-    return (
-        <View>
-            <Text testID="isInitialized">{isInitialized}</Text>
-            <Text testID="isWaitingForJobs">{isWaitingForJobs}</Text>
-            <Text testID="isComplete">{isComplete}</Text>
-        </View>
-    );
-};
 
 describe('useManageLaunch', () => {
     it('initializes launch on mount and waits for job', async () => {
-        const { getByTestId } = renderWithProviders(<Launch isAnimationComplete={true} />);
+        const { getByTestId } = renderWithSetup(<Launch />);
 
         await waitFor(() => {
             const isInitializedText = getByTestId('isInitialized');
@@ -33,7 +17,7 @@ describe('useManageLaunch', () => {
         });
     });
     it('completes launch when all jobs and animation is done', async () => {
-        const { store, getByTestId } = renderWithProviders(<Launch isAnimationComplete={true} />);
+        const { store, getByTestId } = renderWithSetup(<Launch />);
 
         await waitFor(() => {
             store.dispatch(slice.actions.setAllJobsDone());
@@ -50,7 +34,7 @@ describe('useManageLaunch', () => {
         });
     });
     it('does not complete launch when all jobs are done and animation is NOT', async () => {
-        const { store, getByTestId } = renderWithProviders(<Launch isAnimationComplete={false} />);
+        const { store, getByTestId } = renderWithSetup(<Launch isAnimationComplete={false} />);
 
         await waitFor(() => {
             store.dispatch(slice.actions.setAllJobsDone());
