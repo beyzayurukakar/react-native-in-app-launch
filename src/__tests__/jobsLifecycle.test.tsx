@@ -1,0 +1,13 @@
+it.todo('When there is no job, launch completes shortly after initialization');
+it.todo('Job with no dependency starts on initialization');
+it.todo('Multiple jobs with no dependency starts on intialization');
+it.todo('Job depending on single job starts on completion of depended job');
+it.todo('Job depending on multiple jobs starts on completion of depended jobs');
+it.todo('Multiple jobs depending on multiple jobs starts on completion of depended jobs');
+it.todo('Chain of three jobs that depend on the previous start on completion of the previous');
+it.todo('Cannot start a job before launch is initialized');
+it.todo('Cannot start a job after launch is completed');
+it.todo('Cannot start a job after it ends');
+it.todo('Cannot start a job while it is already pending');
+it.todo('Cannot end a job before it starts');
+it.todo('Cannot end a job when it already ended');
