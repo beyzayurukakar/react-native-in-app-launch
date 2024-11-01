@@ -64,7 +64,7 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
     Works like debounce / saga takeLatest.
     */
     listenerMiddleware.startListening({
-        predicate: (action) => {
+        predicate: (action, _currentState, originalState) => {
             /*
             1. Listens for job status changes for:
                 - Job status set to 'pending': decides not to mark all done.
@@ -74,7 +74,8 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
 
             return (
                 action.type === slice.actions.setJobStatus.type ||
-                action.type === slice.actions.initialize.type
+                (action.type === slice.actions.initialize.type &&
+                    selectors.isInitialized(originalState) === false)
             );
         },
         effect: async (_action, api) => {
