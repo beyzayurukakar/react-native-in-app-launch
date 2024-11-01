@@ -9,9 +9,9 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
         effect: (action, api) => {
             const state = api.getState();
 
-            // If launch is already complete, no-op
-            const isLaunchComplete = selectors.isLaunchComplete(state);
-            if (isLaunchComplete) {
+            // If launch is not on, no-op
+            const isWaitingForJobs = selectors.isWaitingForJobs(state);
+            if (!isWaitingForJobs) {
                 return;
             }
 
@@ -37,9 +37,9 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
         effect: (action, api) => {
             const state = api.getState();
 
-            // If launch is already complete, no-op
-            const isLaunchComplete = selectors.isLaunchComplete(state);
-            if (isLaunchComplete) {
+            // If launch is not on, no-op
+            const isWaitingForJobs = selectors.isWaitingForJobs(state);
+            if (!isWaitingForJobs) {
                 return;
             }
 
