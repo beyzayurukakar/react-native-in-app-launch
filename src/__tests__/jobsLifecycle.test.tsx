@@ -394,6 +394,66 @@ describe('Job Lifecycle', () => {
             expect(mockEffect).toHaveBeenCalledTimes(1);
         });
     });
+    it('Cannot end a job before launch is initialized', async () => {
+        const jobName = 'A';
+        const mockEffect = jest.fn();
+
+        const startListeners = (listenerMw: ListenerMiddlewareInstance) => {
+            // Call mock effect when status of job A is changed to 'completed'
+            listenerMw.startListening({
+                predicate: getJobStatusPredicate(jobName, false),
+                effect: mockEffect,
+            });
+        };
+
+        // Do not render Launch, so that no initialization occurs
+        const { store } = renderWithSetup(<View />, {
+            withListenerMiddleware: true,
+            startListeners,
+        });
+
+        // Attempt to start job A
+        store.dispatch(slice.actions.jobStarted(jobName));
+        // Attempt to end job A
+        store.dispatch(slice.actions.jobEnded(jobName));
+
+        await waitFor(() => {
+            // Expect mock effect not to be called
+            expect(mockEffect).not.toHaveBeenCalled();
+        });
+    });
+    it('Cannot end a job after launch is completed', async () => {
+        const jobName = 'A';
+        const mockEffect = jest.fn();
+
+        const startListeners = (listenerMw: ListenerMiddlewareInstance) => {
+            // Call mock effect when status of job A is changed to 'completed'
+            listenerMw.startListening({
+                predicate: getJobStatusPredicate(jobName, false),
+                effect: mockEffect,
+            });
+        };
+
+        const { store, getByTestId } = renderWithSetup(<Launch />, {
+            withListenerMiddleware: true,
+            startListeners,
+        });
+
+        // Wait until launch completes
+        await waitFor(() => {
+            expect(getByTestId(STATE_TEST_IDS.isComplete)).toHaveProp('children', true);
+        });
+
+        // Attempt to start job A
+        store.dispatch(slice.actions.jobStarted('A'));
+        // Attempt to end job A
+        store.dispatch(slice.actions.jobEnded(jobName));
+
+        await waitFor(() => {
+            // Expect mock effect not to be called
+            expect(mockEffect).not.toHaveBeenCalled();
+        });
+    });
     it('Cannot end a job before it starts', async () => {
         const jobName = 'A';
         const mockEffect = jest.fn();
