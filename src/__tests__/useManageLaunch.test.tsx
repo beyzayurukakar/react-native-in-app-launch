@@ -1,5 +1,5 @@
 import { waitFor } from '@testing-library/react-native';
-import { Launch, renderWithSetup } from '../utils/test-utils';
+import { Launch, renderWithSetup, STATE_TEST_IDS } from '../utils/test-utils';
 import { slice } from '../store/slice';
 
 describe('useManageLaunch', () => {
@@ -7,9 +7,9 @@ describe('useManageLaunch', () => {
         const { getByTestId } = renderWithSetup(<Launch />, { withListenerMiddleware: false });
 
         await waitFor(() => {
-            const isInitializedText = getByTestId('isInitialized');
-            const isWaitingForJobsText = getByTestId('isWaitingForJobs');
-            const isCompleteText = getByTestId('isComplete');
+            const isInitializedText = getByTestId(STATE_TEST_IDS.isInitialized);
+            const isWaitingForJobsText = getByTestId(STATE_TEST_IDS.isWaitingForJobs);
+            const isCompleteText = getByTestId(STATE_TEST_IDS.isComplete);
 
             expect(isInitializedText).toHaveProp('children', true);
             expect(isWaitingForJobsText).toHaveProp('children', true);
@@ -26,9 +26,9 @@ describe('useManageLaunch', () => {
         });
 
         await waitFor(() => {
-            const isInitializedText = getByTestId('isInitialized');
-            const isWaitingForJobsText = getByTestId('isWaitingForJobs');
-            const isCompleteText = getByTestId('isComplete');
+            const isInitializedText = getByTestId(STATE_TEST_IDS.isInitialized);
+            const isWaitingForJobsText = getByTestId(STATE_TEST_IDS.isWaitingForJobs);
+            const isCompleteText = getByTestId(STATE_TEST_IDS.isComplete);
 
             expect(isInitializedText).toHaveProp('children', true);
             expect(isWaitingForJobsText).toHaveProp('children', false);
@@ -45,9 +45,9 @@ describe('useManageLaunch', () => {
         });
 
         await waitFor(() => {
-            const isInitializedText = getByTestId('isInitialized');
-            const isWaitingForJobsText = getByTestId('isWaitingForJobs');
-            const isCompleteText = getByTestId('isComplete');
+            const isInitializedText = getByTestId(STATE_TEST_IDS.isInitialized);
+            const isWaitingForJobsText = getByTestId(STATE_TEST_IDS.isWaitingForJobs);
+            const isCompleteText = getByTestId(STATE_TEST_IDS.isComplete);
 
             expect(isInitializedText).toHaveProp('children', true);
             expect(isWaitingForJobsText).toHaveProp('children', false);

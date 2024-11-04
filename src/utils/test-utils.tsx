@@ -59,6 +59,11 @@ export const renderWithSetup = (
     };
 };
 
+export const STATE_TEST_IDS = {
+    isInitialized: 'isInitialized',
+    isWaitingForJobs: 'isWaitingForJobs',
+    isComplete: 'isComplete',
+};
 export const Launch = (props: { isAnimationComplete?: boolean }) => {
     const { isAnimationComplete = true } = props;
 
@@ -68,9 +73,9 @@ export const Launch = (props: { isAnimationComplete?: boolean }) => {
 
     return (
         <View>
-            <Text testID="isInitialized">{isInitialized}</Text>
-            <Text testID="isWaitingForJobs">{isWaitingForJobs}</Text>
-            <Text testID="isComplete">{isComplete}</Text>
+            <Text testID={STATE_TEST_IDS.isInitialized}>{isInitialized}</Text>
+            <Text testID={STATE_TEST_IDS.isWaitingForJobs}>{isWaitingForJobs}</Text>
+            <Text testID={STATE_TEST_IDS.isComplete}>{isComplete}</Text>
         </View>
     );
 };
