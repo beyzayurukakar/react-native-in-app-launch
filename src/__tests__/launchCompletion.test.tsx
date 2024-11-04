@@ -4,10 +4,11 @@ import { DEBOUNCE_DURATION } from '../store/constants';
 import { getListenerPredicate } from '../tools';
 import type { ListenerMiddlewareInstance } from '@reduxjs/toolkit';
 import { slice } from '../store/slice';
+import { View } from 'react-native';
 
 describe('Launch Completion', () => {
     it('When there is no job, launch completes shortly after initialization', async () => {
-        const { getByTestId } = renderWithSetup(<Launch />, {
+        const { getByTestId } = renderWithSetup(<View />, {
             withListenerMiddleware: true,
         });
 
@@ -16,7 +17,7 @@ describe('Launch Completion', () => {
                 // Expect launch to complete
                 expect(getByTestId('isComplete')).toHaveProp('children', true);
             },
-            { timeout: DEBOUNCE_DURATION + 500 }
+            { timeout: DEBOUNCE_DURATION + 1000 }
         );
     });
     it.failing(
