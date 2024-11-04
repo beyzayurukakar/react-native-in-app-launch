@@ -4,21 +4,16 @@ import { DEBOUNCE_DURATION } from '../store/constants';
 import { getListenerPredicate } from '../tools';
 import type { ListenerMiddlewareInstance } from '@reduxjs/toolkit';
 import { slice } from '../store/slice';
-import { View } from 'react-native';
 
 describe('Launch Completion', () => {
     it('When there is no job, launch completes shortly after initialization', async () => {
-        const { getByTestId } = renderWithSetup(<View />, {
+        const { getByTestId } = renderWithSetup(<Launch />, {
             withListenerMiddleware: true,
         });
 
-        await waitFor(
-            () => {
-                // Expect launch to complete
-                expect(getByTestId('isComplete')).toHaveProp('children', true);
-            },
-            { timeout: DEBOUNCE_DURATION + 1000 }
-        );
+        await waitFor(() => {
+            expect(getByTestId('isComplete')).toHaveProp('children', true);
+        });
     });
     it.failing(
         'When a job is added to and not removed from pending jobs, launch pends',
