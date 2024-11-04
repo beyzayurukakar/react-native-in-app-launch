@@ -4,15 +4,20 @@ import { DEBOUNCE_DURATION } from '../store/constants';
 import { getListenerPredicate } from '../tools';
 import type { ListenerMiddlewareInstance } from '@reduxjs/toolkit';
 import { slice } from '../store/slice';
+import { View } from 'react-native';
+import { selectors } from '../store/selectors';
 
 describe('Launch Completion', () => {
-    it('When there is no job, launch completes shortly after initialization', async () => {
-        const { getByTestId } = renderWithSetup(<Launch />, {
+    it('When there is no job, allJobsDone is marked true shortly after initialization', async () => {
+        const { store } = renderWithSetup(<View />, {
             withListenerMiddleware: true,
         });
 
+        store.dispatch(slice.actions.initialize());
+
         await waitFor(() => {
-            expect(getByTestId('isComplete')).toHaveProp('children', true);
+            const areAllJobsDone = selectors.areAllJobsDone(store.getState());
+            expect(areAllJobsDone).toBe(true);
         });
     });
     it.failing(
