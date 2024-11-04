@@ -8,26 +8,6 @@ import { slice } from '../store/slice';
 // import { selectors } from '../store/selectors';
 
 describe('Launch Completion', () => {
-    // it('When there is no job, allJobsDone is marked true shortly after initialization', async () => {
-    //     jest.useFakeTimers();
-    //     const { store } = renderWithSetup(<View />, {
-    //         withListenerMiddleware: true,
-    //     });
-
-    //     store.dispatch(slice.actions.initialize());
-
-    //     waitFor(
-    //         () => {
-    //             const areAllJobsDone = selectors.areAllJobsDone(store.getState());
-    //             expect(areAllJobsDone).toBe(true);
-    //         },
-    //         {
-    //             timeout: 1000,
-    //             interval: 500,
-    //         }
-    //     );
-    //     jest.advanceTimersByTime(1000);
-    // });
     it.failing(
         'When a job is added to and not removed from pending jobs, launch pends',
         async () => {
@@ -80,6 +60,29 @@ describe('Launch Completion', () => {
         });
 
         await waitFor(() => {
+            // Expect launch to complete
+            expect(getByTestId(STATE_TEST_IDS.isComplete)).toHaveProp('children', true);
+        });
+    });
+    it('When there is no job, allJobsDone is marked true shortly after initialization', async () => {
+        const mockEffect = jest.fn();
+
+        const startListeners = (listenerMw: ListenerMiddlewareInstance) => {
+            // Job A listens for initialization and starts-ends itself
+            listenerMw.startListening({
+                predicate: getListenerPredicate(),
+                effect: mockEffect,
+            });
+        };
+
+        const { getByTestId } = renderWithSetup(<Launch />, {
+            withListenerMiddleware: true,
+            startListeners,
+        });
+
+        await waitFor(() => {
+            // Expect launch to be initialized
+            expect(mockEffect).toHaveBeenCalled();
             // Expect launch to complete
             expect(getByTestId(STATE_TEST_IDS.isComplete)).toHaveProp('children', true);
         });
