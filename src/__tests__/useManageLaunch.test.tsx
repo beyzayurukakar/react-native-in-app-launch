@@ -4,7 +4,7 @@ import { slice } from '../store/slice';
 
 describe('useManageLaunch', () => {
     it('initializes launch on mount and waits for job', async () => {
-        const { getByTestId } = renderWithSetup(<Launch />);
+        const { getByTestId } = renderWithSetup(<Launch />, { withListenerMiddleware: false });
 
         await waitFor(() => {
             const isInitializedText = getByTestId('isInitialized');
@@ -17,7 +17,9 @@ describe('useManageLaunch', () => {
         });
     });
     it('completes launch when all jobs and animation is done', async () => {
-        const { store, getByTestId } = renderWithSetup(<Launch />);
+        const { store, getByTestId } = renderWithSetup(<Launch />, {
+            withListenerMiddleware: false,
+        });
 
         await waitFor(() => {
             store.dispatch(slice.actions.setAllJobsDone());
@@ -34,7 +36,9 @@ describe('useManageLaunch', () => {
         });
     });
     it('does not complete launch when all jobs are done and animation is NOT', async () => {
-        const { store, getByTestId } = renderWithSetup(<Launch isAnimationComplete={false} />);
+        const { store, getByTestId } = renderWithSetup(<Launch isAnimationComplete={false} />, {
+            withListenerMiddleware: false,
+        });
 
         await waitFor(() => {
             store.dispatch(slice.actions.setAllJobsDone());

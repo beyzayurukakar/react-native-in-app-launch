@@ -2,7 +2,9 @@ import {
     configureStore,
     createListenerMiddleware,
     Tuple,
+    type AnyListenerPredicate,
     type ListenerMiddlewareInstance,
+    type PayloadAction,
 } from '@reduxjs/toolkit';
 import type { PropsWithChildren } from 'react';
 import { Provider } from 'react-redux';
@@ -11,6 +13,7 @@ import { render } from '@testing-library/react-native';
 import { useLaunchStates, useManageLaunch } from '../tools';
 import { Text, View } from 'react-native';
 import { configureInAppLaunch } from '../config/configure';
+import type { SetJobStatusPayload } from '../store/types';
 
 export const renderWithSetup = (
     ui: React.ReactElement,
@@ -19,13 +22,16 @@ export const renderWithSetup = (
         startListeners?: (listenerMw: ListenerMiddlewareInstance) => void;
     }
 ) => {
+    const { withListenerMiddleware = true, startListeners } = options || {};
+
     let listenerMiddleware: ListenerMiddlewareInstance | undefined;
-    if (options?.withListenerMiddleware === true) {
+    if (withListenerMiddleware === true) {
         listenerMiddleware = createListenerMiddleware();
         configureInAppLaunch({
             listenerMiddleware,
         });
     }
+
     const store = configureStore({
         reducer: {
             [slice.name]: slice.reducer,
@@ -40,7 +46,7 @@ export const renderWithSetup = (
     });
 
     if (listenerMiddleware) {
-        options?.startListeners?.(listenerMiddleware);
+        startListeners?.(listenerMiddleware);
     }
 
     const Wrapper = ({ children }: PropsWithChildren) => (
@@ -74,3 +80,14 @@ export const configureLaunch = () => {
 
     return listenerMiddleware;
 };
+
+export const getJobStatusPredicate =
+    (jobName: string, status: boolean): AnyListenerPredicate<any> =>
+    (action) => {
+        const _action = action as PayloadAction<SetJobStatusPayload>;
+        return (
+            action.type === slice.actions.setJobStatus.type &&
+            _action.payload?.jobName === jobName &&
+            _action.payload?.status === status
+        );
+    };

@@ -1,6 +1,7 @@
 import { type ListenerMiddlewareInstance } from '@reduxjs/toolkit';
 import { slice } from './slice';
 import { selectors } from './selectors';
+import { DEBOUNCE_DURATION } from './constants';
 
 export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance) => {
     // A job started
@@ -18,8 +19,8 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
             const jobName = action.payload;
             const currentStatusOfJob = selectors.jobStatus(state, jobName);
 
-            // Check if job was not already pending
-            if (currentStatusOfJob === undefined || currentStatusOfJob === false) {
+            // Check if job was not already pending or completed
+            if (currentStatusOfJob === undefined) {
                 // Set job's 'pending' status to true
                 api.dispatch(
                     slice.actions.setJobStatus({
@@ -84,9 +85,9 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
 
             // Wait in case another instance of this listener is called
             // i.e a job status update happened
-            await api.delay(200);
+            await api.delay(DEBOUNCE_DURATION);
 
-            // If we are here, no job status update happened in the last 500 ms:
+            // If we are here, no job status update happened in the last [DEBOUNCE_DURATION] miliseconds:
             const state = api.getState();
             if (selectors.pendingJobsCount(state) > 0) {
                 // There are still pending jobs: no-op
