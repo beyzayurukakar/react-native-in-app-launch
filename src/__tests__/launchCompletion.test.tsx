@@ -68,7 +68,7 @@ describe('Launch Completion', () => {
         const mockEffect = jest.fn();
 
         const startListeners = (listenerMw: ListenerMiddlewareInstance) => {
-            // Job A listens for initialization and starts-ends itself
+            // Listens for initialization
             listenerMw.startListening({
                 predicate: getListenerPredicate(),
                 effect: mockEffect,
@@ -83,6 +83,8 @@ describe('Launch Completion', () => {
         await waitFor(() => {
             // Expect launch to be initialized
             expect(mockEffect).toHaveBeenCalled();
+        });
+        await waitFor(() => {
             // Expect launch to complete
             expect(getByTestId(STATE_TEST_IDS.isComplete)).toHaveProp('children', true);
         });
