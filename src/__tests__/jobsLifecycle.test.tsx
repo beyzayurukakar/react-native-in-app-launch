@@ -2,7 +2,12 @@ import { View } from 'react-native';
 import type { ListenerMiddlewareInstance } from '@reduxjs/toolkit';
 import { waitFor } from '@testing-library/react-native';
 
-import { getJobStatusPredicate, Launch, renderWithSetup } from '../utils/test-utils';
+import {
+    getJobStatusPredicate,
+    Launch,
+    renderWithSetup,
+    STATE_TEST_IDS,
+} from '../utils/test-utils';
 
 import { getListenerPredicate } from '../tools';
 import { slice } from '../store/slice';
@@ -313,13 +318,15 @@ describe('Job Lifecycle', () => {
             });
         };
 
-        const { store } = renderWithSetup(<Launch />, {
-            withListenerMiddleware: false,
+        const { store, getByTestId } = renderWithSetup(<Launch />, {
+            withListenerMiddleware: true,
             startListeners,
         });
 
-        // Set all jobs done so that launch can complete
-        store.dispatch(slice.actions.setAllJobsDone());
+        // Wait until launch completes
+        await waitFor(() => {
+            expect(getByTestId(STATE_TEST_IDS.isComplete)).toHaveProp('children', true);
+        });
 
         // Attempt to start job A
         store.dispatch(slice.actions.jobStarted('A'));
