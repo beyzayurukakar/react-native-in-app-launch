@@ -1,6 +1,6 @@
 # react-native-in-app-launch
 
-TODO
+**This project is ongoing!!**
 
 ## Installation
 
@@ -12,11 +12,6 @@ npm install react-native-in-app-launch
 
 
 ```js
-import { multiply } from 'react-native-in-app-launch';
-
-// ...
-
-const result = await multiply(3, 7);
 ```
 
 
