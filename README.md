@@ -2,6 +2,11 @@
 
 **This project is ongoing!!**
 
+Development: Done
+Tests: Done
+Example App: To be improved
+Docs: Todo
+
 ## Installation
 
 ```sh
