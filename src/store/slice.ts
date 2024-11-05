@@ -1,9 +1,8 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { inAppLaunchConfig } from '../config/configuration';
 import type { InAppLaunchState, SetJobStatusPayload } from './types';
 import { SLICE_NAME } from './constants';
 
-const INITIAL_STATE: InAppLaunchState = {
+export const INITIAL_STATE: InAppLaunchState = {
     isInitialized: false,
     isWaitingForJobs: false,
     areAllJobsDone: false,
@@ -19,9 +18,6 @@ export const slice = createSlice({
         initialize: (state) => {
             state.isInitialized = true;
             state.isWaitingForJobs = true;
-        },
-        setPendingJobsCount: (state, action: PayloadAction<number>) => {
-            state.pendingJobsCount = action.payload;
         },
         setAllJobsDone: (state) => {
             state.isWaitingForJobs = false;
@@ -45,13 +41,6 @@ export const slice = createSlice({
         jobStarted: (_state, _action: PayloadAction<string>) => {},
         // Handled by lsitener
         jobEnded: (_state, _action: PayloadAction<string>) => {},
-    },
-    extraReducers: (builder) => {
-        if (inAppLaunchConfig.globalResetActionType) {
-            builder.addCase(inAppLaunchConfig.globalResetActionType, () => {
-                return { ...INITIAL_STATE };
-            });
-        }
     },
 });
 

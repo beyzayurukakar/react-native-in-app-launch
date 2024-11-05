@@ -8,8 +8,6 @@ export type InAppLaunchConfigParam = {
     listenerMiddleware: ListenerMiddlewareInstance | null;
     /* TODO: add docs */
     sliceSelector?: (state: any) => InAppLaunchState;
-    /* TODO: add docs */
-    globalResetActionType?: string;
 };
 
 export const configureInAppLaunch = (config: InAppLaunchConfigParam) => {
@@ -25,9 +23,6 @@ export const configureInAppLaunch = (config: InAppLaunchConfigParam) => {
         );
     }
     inAppLaunchConfig.listenerMiddleware = config.listenerMiddleware;
-
-    // Global reset action
-    inAppLaunchConfig.globalResetActionType = config.globalResetActionType;
 
     // Custom slice selector
     if (config.sliceSelector) {

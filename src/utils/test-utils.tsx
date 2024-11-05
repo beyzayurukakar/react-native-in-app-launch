@@ -16,7 +16,7 @@ import { configureInAppLaunch } from '../config/configure';
 import type { SetJobStatusPayload } from '../store/types';
 
 export const renderWithSetup = (
-    ui: React.ReactElement,
+    ui: React.ReactElement | null,
     options?: {
         withListenerMiddleware?: boolean;
         startListeners?: (listenerMw: ListenerMiddlewareInstance) => void;
@@ -55,7 +55,7 @@ export const renderWithSetup = (
 
     return {
         store,
-        ...render(ui, { wrapper: Wrapper }),
+        ...render(ui || <View />, { wrapper: Wrapper }),
     };
 };
 

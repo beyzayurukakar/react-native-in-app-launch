@@ -3,7 +3,6 @@ import type { InAppLaunchState } from '../store/types';
 import { SLICE_NAME } from '../store/constants';
 
 type InAppLaunchConfig = {
-    globalResetActionType?: string;
     listenerMiddleware: ListenerMiddlewareInstance | null;
     sliceSelector: (state: any) => InAppLaunchState;
 };

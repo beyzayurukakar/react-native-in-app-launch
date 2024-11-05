@@ -21,16 +21,13 @@ describe('Configuration', () => {
     });
     it('sets all options in config', () => {
         const listenerMw = createListenerMiddleware();
-        const globalResetActionType = 'reset';
         const sliceSelector = (state: any) => state as InAppLaunchState;
         configureInAppLaunch({
             listenerMiddleware: listenerMw,
-            globalResetActionType,
             sliceSelector,
         });
 
         expect(inAppLaunchConfig.listenerMiddleware).toBe(listenerMw);
-        expect(inAppLaunchConfig.globalResetActionType).toBe(globalResetActionType);
         expect(inAppLaunchConfig.sliceSelector).toBe(sliceSelector);
     });
     it('has default sliceSelector value if not set', () => {
