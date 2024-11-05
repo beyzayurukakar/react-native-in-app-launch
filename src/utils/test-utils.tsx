@@ -17,12 +17,12 @@ import type { SetJobStatusPayload } from '../store/types';
 
 export const renderWithSetup = (
     ui: React.ReactElement | null,
-    options?: {
-        withListenerMiddleware?: boolean;
+    options: {
+        withListenerMiddleware: boolean;
         startListeners?: (listenerMw: ListenerMiddlewareInstance) => void;
     }
 ) => {
-    const { withListenerMiddleware = true, startListeners } = options || {};
+    const { withListenerMiddleware, startListeners } = options;
 
     let listenerMiddleware: ListenerMiddlewareInstance | undefined;
     if (withListenerMiddleware === true) {
@@ -78,12 +78,6 @@ export const Launch = (props: { isAnimationComplete?: boolean }) => {
             <Text testID={STATE_TEST_IDS.isComplete}>{isComplete}</Text>
         </View>
     );
-};
-
-export const configureLaunch = () => {
-    const listenerMiddleware = createListenerMiddleware();
-
-    return listenerMiddleware;
 };
 
 export const getJobStatusPredicate =
