@@ -12,10 +12,12 @@ const Launch = () => {
             <Text style={styles.titleText}>React Native In-App Launch Demo</Text>
             <View style={styles.jobStatusListContainer}>
                 <JobBox jobName="A" />
-                <JobBox jobName="C" />
-                <JobBox jobName="E" />
                 <JobBox jobName="B" />
+                <JobBox jobName="C" />
                 <JobBox jobName="D" />
+            </View>
+            <View style={styles.jobStatusListContainer}>
+                <JobBox jobName="E" />
                 <JobBox jobName="F" />
                 <JobBox jobName="G" />
             </View>
@@ -39,9 +41,10 @@ const styles = StyleSheet.create({
     },
     jobStatusListContainer: {
         flexDirection: 'row',
-        gap: width * 0.005,
+        gap: width * 0.025,
         flexWrap: 'wrap',
         justifyContent: 'center',
+        marginBottom: width * 0.1,
     },
 });
 
