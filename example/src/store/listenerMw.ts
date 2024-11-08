@@ -8,8 +8,8 @@ import { listenersD } from '../jobs/jobD';
 export const listenerMiddleware = createListenerMiddleware();
 
 export const startListeners = () => {
-    listenersA();
-    listenersB();
-    listenersC();
-    listenersD();
+    listenersA(listenerMiddleware);
+    listenersB(listenerMiddleware);
+    listenersC(listenerMiddleware);
+    listenersD(listenerMiddleware);
 };

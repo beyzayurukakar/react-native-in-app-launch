@@ -1,9 +1,9 @@
 import { getListenerPredicate, inAppLaunchSlice } from 'react-native-in-app-launch';
-import { listenerMiddleware } from '../store/listenerMw';
 import { getRandomDuration } from './randomDuration';
 import { JOB_NAMES } from './jobNames';
+import type { ListenerMiddlewareInstance } from '@reduxjs/toolkit';
 
-export const listenersA = () => {
+export const listenersA = (listenerMiddleware: ListenerMiddlewareInstance) => {
     listenerMiddleware.startListening({
         predicate: getListenerPredicate(),
         effect: async (_action, api) => {
