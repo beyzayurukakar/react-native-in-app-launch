@@ -28,4 +28,8 @@ describe('getSagaPattern', () => {
         });
         expect(getSagaPattern(anotherJobName)(action)).toBe(false);
     });
+    it('matches initialization action if no jobName is given', () => {
+        const action = slice.actions.initialize();
+        expect(getSagaPattern()(action)).toBe(true);
+    });
 });
