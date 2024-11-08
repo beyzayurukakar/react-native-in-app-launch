@@ -5,4 +5,5 @@ export const JOB_NAMES = {
     D: 'D',
     E: 'E',
     F: 'F',
+    G: 'G',
 };

@@ -14,6 +14,7 @@ const Launch = () => {
     const jobStatusD = useSelector((state) => selectors.jobStatus(state, JOB_NAMES.D));
     const jobStatusE = useSelector((state) => selectors.jobStatus(state, JOB_NAMES.E));
     const jobStatusF = useSelector((state) => selectors.jobStatus(state, JOB_NAMES.F));
+    const jobStatusG = useSelector((state) => selectors.jobStatus(state, JOB_NAMES.G));
 
     return (
         <View style={styles.container}>
@@ -35,6 +36,9 @@ const Launch = () => {
             </Text>
             <Text style={getJobStatusStyle(jobStatusF)}>
                 {'Job F: ' + getJobStatusText(jobStatusF)}
+            </Text>
+            <Text style={getJobStatusStyle(jobStatusG)}>
+                {'Job G: ' + getJobStatusText(jobStatusG)}
             </Text>
         </View>
     );

@@ -1,9 +1,9 @@
-Jobs:
-A
-B
-C
-D
-E
+Jobs:  
+A  
+B  
+C  
+D  
+E  
 
 ## Job A
 - no dependency
@@ -22,11 +22,15 @@ E
 - runs using **listener middleware**
 
 ## Job E
-- depends on **D**
+- no dependency
 - runs using **sagas**
 
 ## Job F
-- depends on **B** and **D**
+- depends on **E**
+- runs using **sagas**
+
+## Job G
+- depends on **B** and **F**
 - runs using **sagas**
 
 
