@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 const Home = () => {
     return (
         <View style={styles.container}>
-            <Text>Home</Text>
+            <Text style={styles.messageText}>You are in!</Text>
         </View>
     );
 };
@@ -13,7 +13,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'lightgray',
+        backgroundColor: '#d0e9f7',
+    },
+    messageText: {
+        fontSize: 25,
+        fontWeight: '600',
     },
 });
 

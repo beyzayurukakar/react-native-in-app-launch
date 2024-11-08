@@ -1,6 +1,6 @@
 import { getSagaPattern, inAppLaunchSlice } from 'react-native-in-app-launch';
 import { all, call, delay, put, take } from 'redux-saga/effects';
-import { JOB_NAMES } from './jobNames';
+import { JOB_NAMES } from './constants';
 import { getRandomDuration } from './randomDuration';
 
 function* workerJobG() {

@@ -1,87 +1,47 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { selectors, useManageLaunch } from 'react-native-in-app-launch';
-import { useSelector } from 'react-redux';
-import { JOB_NAMES } from '../../jobs/jobNames';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { useManageLaunch } from 'react-native-in-app-launch';
+import JobBox from './JobBox';
 
 const Launch = () => {
     useManageLaunch({
         isAnimationComplete: true,
     });
 
-    const jobStatusA = useSelector((state) => selectors.jobStatus(state, JOB_NAMES.A));
-    const jobStatusB = useSelector((state) => selectors.jobStatus(state, JOB_NAMES.B));
-    const jobStatusC = useSelector((state) => selectors.jobStatus(state, JOB_NAMES.C));
-    const jobStatusD = useSelector((state) => selectors.jobStatus(state, JOB_NAMES.D));
-    const jobStatusE = useSelector((state) => selectors.jobStatus(state, JOB_NAMES.E));
-    const jobStatusF = useSelector((state) => selectors.jobStatus(state, JOB_NAMES.F));
-    const jobStatusG = useSelector((state) => selectors.jobStatus(state, JOB_NAMES.G));
-
     return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>Launch Screen</Text>
-            <Text style={getJobStatusStyle(jobStatusA)}>
-                {'Job A: ' + getJobStatusText(jobStatusA)}
-            </Text>
-            <Text style={getJobStatusStyle(jobStatusB)}>
-                {'Job B: ' + getJobStatusText(jobStatusB)}
-            </Text>
-            <Text style={getJobStatusStyle(jobStatusC)}>
-                {'Job C: ' + getJobStatusText(jobStatusC)}
-            </Text>
-            <Text style={getJobStatusStyle(jobStatusD)}>
-                {'Job D: ' + getJobStatusText(jobStatusD)}
-            </Text>
-            <Text style={getJobStatusStyle(jobStatusE)}>
-                {'Job E: ' + getJobStatusText(jobStatusE)}
-            </Text>
-            <Text style={getJobStatusStyle(jobStatusF)}>
-                {'Job F: ' + getJobStatusText(jobStatusF)}
-            </Text>
-            <Text style={getJobStatusStyle(jobStatusG)}>
-                {'Job G: ' + getJobStatusText(jobStatusG)}
-            </Text>
+            <Text style={styles.titleText}>React Native In-App Launch Demo</Text>
+            <View style={styles.jobStatusListContainer}>
+                <JobBox jobName="A" />
+                <JobBox jobName="C" />
+                <JobBox jobName="E" />
+                <JobBox jobName="B" />
+                <JobBox jobName="D" />
+                <JobBox jobName="F" />
+                <JobBox jobName="G" />
+            </View>
         </View>
     );
 };
-const getJobStatusText = (status?: boolean) => {
-    if (status === true) {
-        return 'Pending';
-    }
-    if (status === false) {
-        return 'Done';
-    }
 
-    return 'Not started';
-};
-const getJobStatusStyle = (status?: boolean) => {
-    if (status === true) {
-        return styles.jobPending;
-    }
-    if (status === false) {
-        return styles.jobDone;
-    }
-
-    return styles.jobNotStarted;
-};
-
+const width = Dimensions.get('screen').width;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingHorizontal: width * 0.01,
     },
     titleText: {
         fontWeight: '900',
-        marginBottom: 20,
+        marginBottom: width * 0.1,
+        fontSize: width * 0.06,
+        textAlign: 'center',
     },
-    jobNotStarted: {
-        color: 'grey',
-    },
-    jobPending: {
-        color: 'black',
-    },
-    jobDone: {
-        color: 'green',
+    jobStatusListContainer: {
+        flexDirection: 'row',
+        gap: width * 0.005,
+        flexWrap: 'wrap',
+        justifyContent: 'center',
     },
 });
 

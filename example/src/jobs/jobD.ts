@@ -1,6 +1,6 @@
 import { getListenerPredicate, inAppLaunchSlice } from 'react-native-in-app-launch';
 import { getRandomDuration } from './randomDuration';
-import { JOB_NAMES } from './jobNames';
+import { JOB_NAMES } from './constants';
 import type { ListenerMiddlewareInstance } from '@reduxjs/toolkit';
 
 export const listenersD = (listenerMiddleware: ListenerMiddlewareInstance) => {
