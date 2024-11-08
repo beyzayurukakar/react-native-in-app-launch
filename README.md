@@ -4,7 +4,7 @@
 
 Development: Done
 Tests: Done
-Example App: To be improved
+Example App: Done
 Docs: Todo
 
 ## Installation
