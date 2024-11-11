@@ -3,7 +3,8 @@ import { selectors } from '../store/selectors';
 import { useEffect } from 'react';
 import { slice } from '../store/slice';
 
-export const useManageLaunch = ({ isAnimationComplete }: { isAnimationComplete: boolean }) => {
+export const useManageLaunch = ({ isAnimationComplete }: { isAnimationComplete?: boolean }) => {
+    const _isAnimationComplete = isAnimationComplete === undefined ? true : isAnimationComplete;
     const dispatch = useDispatch();
     const areAllJobsDone = useSelector(selectors.areAllJobsDone);
 
@@ -12,8 +13,8 @@ export const useManageLaunch = ({ isAnimationComplete }: { isAnimationComplete: 
     }, [dispatch]);
 
     useEffect(() => {
-        if (areAllJobsDone && isAnimationComplete) {
+        if (areAllJobsDone && _isAnimationComplete) {
             dispatch(slice.actions.completeInAppLaunch());
         }
-    }, [dispatch, areAllJobsDone, isAnimationComplete]);
+    }, [dispatch, areAllJobsDone, _isAnimationComplete]);
 };
