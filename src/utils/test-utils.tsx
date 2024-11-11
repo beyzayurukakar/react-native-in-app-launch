@@ -12,8 +12,8 @@ import { slice } from '../store/slice';
 import { render } from '@testing-library/react-native';
 import { useLaunchStates, useManageLaunch } from '../tools';
 import { Text, View } from 'react-native';
-import { configureInAppLaunch } from '../config/configure';
 import type { SetJobStatusPayload } from '../store/types';
+import { registerListeners } from '../store/listeners';
 
 export const renderWithSetup = (
     ui: React.ReactElement | null,
@@ -27,9 +27,6 @@ export const renderWithSetup = (
     let listenerMiddleware: ListenerMiddlewareInstance | undefined;
     if (withListenerMiddleware === true) {
         listenerMiddleware = createListenerMiddleware();
-        configureInAppLaunch({
-            listenerMiddleware,
-        });
     }
 
     const store = configureStore({
@@ -47,6 +44,7 @@ export const renderWithSetup = (
 
     if (listenerMiddleware) {
         startListeners?.(listenerMiddleware);
+        registerListeners(listenerMiddleware);
     }
 
     const Wrapper = ({ children }: PropsWithChildren) => (

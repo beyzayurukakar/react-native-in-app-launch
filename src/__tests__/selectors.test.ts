@@ -1,5 +1,6 @@
 import { SLICE_NAME } from '../store/constants';
 import { selectors } from '../store/selectors';
+import type { _RootState } from '../store/types';
 
 const state = {
     [SLICE_NAME]: {
@@ -10,8 +11,13 @@ const state = {
             c: false,
             d: false,
         },
+        isInitialized: true,
+        isLaunchComplete: false,
+        areAllJobsDone: false,
+        isWaitingForJobs: true,
+        pendingJobsCount: 2,
     },
-};
+} as _RootState;
 
 describe('Selectors: isJobArrCompleted', () => {
     it('Returns true if no jobNames provided', () => {

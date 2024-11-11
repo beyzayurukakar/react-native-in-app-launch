@@ -2,10 +2,12 @@ import { type ListenerMiddlewareInstance } from '@reduxjs/toolkit';
 import { slice } from './slice';
 import { selectors } from './selectors';
 import { DEBOUNCE_DURATION } from './constants';
+import type { _RootState } from './types';
 
 export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance) => {
+    const listenerMw = listenerMiddleware as ListenerMiddlewareInstance<_RootState>;
     // A job started
-    listenerMiddleware.startListening({
+    listenerMw.startListening({
         actionCreator: slice.actions.jobStarted,
         effect: (action, api) => {
             const state = api.getState();
@@ -33,7 +35,7 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
     });
 
     // A job ended
-    listenerMiddleware.startListening({
+    listenerMw.startListening({
         actionCreator: slice.actions.jobEnded,
         effect: (action, api) => {
             const state = api.getState();
@@ -64,7 +66,7 @@ export const registerListeners = (listenerMiddleware: ListenerMiddlewareInstance
     Marks 'allJobsDone' true when there are no jobs left and will not be.
     Works like debounce / saga takeLatest.
     */
-    listenerMiddleware.startListening({
+    listenerMw.startListening({
         predicate: (action, _currentState, originalState) => {
             /*
             1. Listens for job status changes for:

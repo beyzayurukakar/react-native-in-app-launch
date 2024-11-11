@@ -2,11 +2,12 @@ import { ActivityIndicator, Dimensions, StyleSheet, Text, View } from 'react-nat
 import { JOB_DEPS, JOB_MWS, type JOB_NAMES } from '../../jobs/constants';
 import { useSelector } from 'react-redux';
 import { selectors } from 'react-native-in-app-launch';
+import type { RootState } from '../../store/configuration';
 
 const JobBox = (props: { jobName: keyof typeof JOB_NAMES }) => {
     const { jobName } = props;
 
-    const jobStatus = useSelector((state) => selectors.jobStatus(state, jobName));
+    const jobStatus = useSelector((state: RootState) => selectors.jobStatus(state, jobName));
 
     const renderJobStatus = () => {
         if (jobStatus === undefined) {

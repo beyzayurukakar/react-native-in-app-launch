@@ -1,3 +1,5 @@
+import type { SLICE_NAME } from './constants';
+
 export type InAppLaunchState = {
     isInitialized: boolean;
     isWaitingForJobs: boolean;
@@ -8,3 +10,7 @@ export type InAppLaunchState = {
 };
 
 export type SetJobStatusPayload = { jobName: string; status: boolean };
+
+export type _RootState = {
+    [SLICE_NAME]: InAppLaunchState;
+};

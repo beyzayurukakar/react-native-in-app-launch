@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { inAppLaunchSlice } from 'react-native-in-app-launch';
 
-import { listenerMiddleware, startListeners } from './listenerMw';
-import { runSagas, sagaMiddleware } from './sagaMw';
+import { listenerMiddleware, registerListeners } from './listenerMw';
+import { sagaMiddleware, runSagas } from './sagaMw';
 
 const reducers = {
     [inAppLaunchSlice.name]: inAppLaunchSlice.reducer,
@@ -15,4 +15,6 @@ export const store = configureStore({
 });
 
 runSagas();
-startListeners();
+registerListeners();
+
+export type RootState = ReturnType<typeof store.getState>;
