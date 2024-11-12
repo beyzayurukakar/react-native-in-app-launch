@@ -10,11 +10,10 @@ The library leverages RTK Listener Middleware to efficiently manage task depende
 
 - [Example](#example)
 - [Installation](#installation)
-- [Configuration](#configuration)
+- [Setup](#setup)
 - [Usage](#usage)
 - [API](#api)
-- [Inspection and Debugging](#inspection-and-debugging)
-- [Contribution](#contribution)
+- [Contributing](#contributing)
 
 ## Example
 
