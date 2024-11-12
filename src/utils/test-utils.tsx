@@ -7,13 +7,14 @@ import {
     type PayloadAction,
 } from '@reduxjs/toolkit';
 import type { PropsWithChildren } from 'react';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { slice } from '../store/slice';
 import { render } from '@testing-library/react-native';
-import { useLaunchStates, useManageLaunch } from '../tools';
+import { useManageLaunch } from '../tools';
 import { Text, View } from 'react-native';
 import type { SetJobStatusPayload } from '../store/types';
 import { registerListeners } from '../store/listeners';
+import { selectors } from '../store/selectors';
 
 export const renderWithSetup = (
     ui: React.ReactElement | null,
@@ -67,7 +68,9 @@ export const Launch = (props: { isAnimationComplete?: boolean }) => {
 
     useManageLaunch({ isAnimationComplete });
 
-    const { isInitialized, isWaitingForJobs, isComplete } = useLaunchStates();
+    const isInitialized = useSelector(selectors.isInitialized);
+    const isWaitingForJobs = useSelector(selectors.isWaitingForJobs);
+    const isComplete = useSelector(selectors.isLaunchComplete);
 
     return (
         <View>
