@@ -1,7 +1,7 @@
 {
   "name": "react-native-in-app-launch",
   "version": "0.1.0",
-  "description": "TODO",
+  "description": "A React Native library that simplifies the management of essential tasks required before entering a mobile app.",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",

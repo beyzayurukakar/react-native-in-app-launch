@@ -3,8 +3,20 @@ import { selectors } from '../store/selectors';
 import { useEffect } from 'react';
 import { slice } from '../store/slice';
 
-export const useManageLaunch = ({ isAnimationComplete }: { isAnimationComplete?: boolean }) => {
-    const _isAnimationComplete = isAnimationComplete === undefined ? true : isAnimationComplete;
+type ManageLaunchOptions = {
+    /** Launch will not be completed until this value is `true`. Default value is `true`. */
+    isAnimationComplete?: boolean;
+};
+
+/**
+ * To be used in a launch indicator component
+ * for updating launch state such that it is:
+ * * initialized on mount,
+ * * completed when all jobs and animation are done.
+ */
+export const useManageLaunch = (options: ManageLaunchOptions) => {
+    const { isAnimationComplete = true } = options;
+
     const dispatch = useDispatch();
     const areAllJobsDone = useSelector(selectors.areAllJobsDone);
 
@@ -13,8 +25,8 @@ export const useManageLaunch = ({ isAnimationComplete }: { isAnimationComplete?:
     }, [dispatch]);
 
     useEffect(() => {
-        if (areAllJobsDone && _isAnimationComplete) {
+        if (areAllJobsDone && isAnimationComplete) {
             dispatch(slice.actions.completeInAppLaunch());
         }
-    }, [dispatch, areAllJobsDone, _isAnimationComplete]);
+    }, [dispatch, areAllJobsDone, isAnimationComplete]);
 };

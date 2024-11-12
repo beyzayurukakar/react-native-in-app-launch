@@ -2,9 +2,13 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { SetJobStatusPayload } from '../store/types';
 import { slice } from '../store/slice';
 
-export const getSagaPattern = (jobName?: string) => (action: any) => {
+/**
+ * @param dependedJobName Depended job's unique name
+ * @returns {(action: any) => boolean} A Redux Saga pattern function to pass to a saga effect creator.
+ */
+export const getSagaPattern = (dependedJobName?: string) => (action: any) => {
     // Match initialization
-    if (jobName === undefined) {
+    if (dependedJobName === undefined) {
         return action.type === slice.actions.initialize.type;
     }
 
@@ -12,7 +16,7 @@ export const getSagaPattern = (jobName?: string) => (action: any) => {
     const _action = action as PayloadAction<SetJobStatusPayload>;
     return (
         _action.type === slice.actions.setJobStatus.type &&
-        _action.payload.jobName === jobName &&
-        _action.payload.status === false
+        _action.payload?.jobName === dependedJobName &&
+        _action.payload?.status === false
     );
 };

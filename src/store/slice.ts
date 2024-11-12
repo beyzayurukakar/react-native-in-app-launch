@@ -49,8 +49,11 @@ export const sliceExternal = {
     name: slice.name,
     reducer: slice.reducer,
     actions: {
+        /** Sets the status of job to 'pending' (`true`) */
         jobStarted: slice.actions.jobStarted,
+        /** Sets the status of job to 'done' (`false`) */
         jobEnded: slice.actions.jobEnded,
+        /** Resets all state to default */
         reset: slice.actions.reset,
     },
 };

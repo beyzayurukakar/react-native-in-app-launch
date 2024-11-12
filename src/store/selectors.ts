@@ -38,13 +38,22 @@ const isJobArrCompletedSelector = createSelector(
 );
 
 export const selectors = {
+    /** Is the launch initialized */
     isInitialized: (state: _RootState) => state.inAppLaunch.isInitialized,
+    /** Is the launch waiting/listening for jobs */
     isWaitingForJobs: (state: _RootState) => state.inAppLaunch.isWaitingForJobs,
+    /** Are all the jobs done and no jobs will be added */
     areAllJobsDone: (state: _RootState) => state.inAppLaunch.areAllJobsDone,
+    /** Is the launch completed */
     isLaunchComplete: (state: _RootState) => state.inAppLaunch.isLaunchComplete,
+    /** How many jobs are pending */
     pendingJobsCount: (state: _RootState) => state.inAppLaunch.pendingJobsCount,
+    /** Status of a single job */
     jobStatus: (state: _RootState, jobName: string) => state.inAppLaunch.jobStatusDict[jobName],
+    /** List of pending jobs */
     pendingJobs: pendingJobsSelector,
+    /** List of completed jobs */
     completedJobs: completedJobsSelector,
+    /** Are the jobs in the given list all done */
     isJobArrCompleted: isJobArrCompletedSelector,
 };
