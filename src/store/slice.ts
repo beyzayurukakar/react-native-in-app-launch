@@ -37,6 +37,7 @@ export const slice = createSlice({
             state.isLaunchComplete = true;
         },
         reset: () => ({ ...INITIAL_STATE }),
+
         // Handled by listener
         jobStarted: (_state, _action: PayloadAction<string>) => {},
         // Handled by lsitener
@@ -50,5 +51,6 @@ export const sliceExternal = {
     actions: {
         jobStarted: slice.actions.jobStarted,
         jobEnded: slice.actions.jobEnded,
+        reset: slice.actions.reset,
     },
 };
