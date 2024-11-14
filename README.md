@@ -17,6 +17,12 @@ The library leverages RTK Listener Middleware to efficiently manage task depende
 
 ## Example
 
+
+https://github.com/user-attachments/assets/423dfcaf-44c0-4005-8d6f-6dae6dbecfb0
+
+
+
+
 ## Installation
 
 ```sh
@@ -401,12 +407,12 @@ const inAppLaunchSelectors: {
 
 #### Launch status values during launch lifecycle:
 
-| (Launch Status)   | Not initialized | Pending | All Jobs Done | Launch Completed |
-| ----------------- | --------------- | ------- | ------------- | ---------------- |
-| isInitialized     | false           | true    | true          | true             |
-| isWaitingForJobs  | false           | true    | false         | false            |
-| areAllJobsDone    | false           | false   | true          | true             |
-| isLaunchComplete  | false           | false   | false         | true             |
+| (Launch Status)   | Default State   | Launch Initialized | All Jobs Done | Launch Completed | Resetted |
+| ----------------- | --------------- | ------------------ | ------------- | ---------------- | -------- |
+| isInitialized     | false           | true               | true          | true             | false    |
+| isWaitingForJobs  | false           | true               | false         | false            | false    |
+| areAllJobsDone    | false           | false              | true          | true             | false    |
+| isLaunchComplete  | false           | false              | false         | true             | false    |
 
 
 
