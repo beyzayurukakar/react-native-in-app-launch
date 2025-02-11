@@ -46,8 +46,7 @@ export const slice = createSlice({
 });
 
 export const sliceExternal = {
-    name: slice.name,
-    reducer: slice.reducer,
+    ...slice,
     actions: {
         /** Sets the status of job to 'pending' (`true`) */
         jobStarted: slice.actions.jobStarted,
