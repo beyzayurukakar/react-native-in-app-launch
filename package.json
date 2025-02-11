@@ -1,6 +1,6 @@
 {
   "name": "react-native-in-app-launch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A React Native library that simplifies the management of essential tasks required before entering a mobile app.",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
